@@ -1,8 +1,7 @@
 package com.learn.rest.websevices.restfulwebservices.users;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,6 +14,16 @@ public class UserResource {
     @GetMapping("/users")
     public List<User> getAllUsers(){
         return userDaoService.findAll();
+    }
+
+    @GetMapping("users/{id}")
+    public User findUserById(@PathVariable int id){
+        return userDaoService.findById(id);
+    }
+
+    @PostMapping("/users")
+    public User addNewUser(@RequestBody User user){
+        return userDaoService.save(user);
     }
 
 }
