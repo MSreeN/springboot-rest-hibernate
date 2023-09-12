@@ -1,5 +1,6 @@
 package com.learn.rest.websevices.restfulwebservices.users;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,7 @@ public class UserResource {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<User> addNewUser(@RequestBody User user){
+    public ResponseEntity<User> addNewUser(@Valid @RequestBody User user){
         User savedUser = userDaoService.save(user);
 //        System.out.println("--------------" +
 //                ServletUriComponentsBuilder.fromCurrentRequestUri().toString());

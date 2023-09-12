@@ -1,11 +1,16 @@
 package com.learn.rest.websevices.restfulwebservices.users;
 
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDate;
 
 public class User {
 
     private int id;
+    @Size(min = 2, message = "Name Should have atleast 2 characters")
     private String name;
+    @Past(message = "Date should be past")
     private LocalDate dob;
 
     public  User(){}
