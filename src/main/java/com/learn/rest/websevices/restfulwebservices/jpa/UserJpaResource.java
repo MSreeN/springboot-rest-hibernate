@@ -1,7 +1,9 @@
 package com.learn.rest.websevices.restfulwebservices.jpa;
 
+import com.learn.rest.websevices.restfulwebservices.users.Post;
 import com.learn.rest.websevices.restfulwebservices.users.User;
 import com.learn.rest.websevices.restfulwebservices.users.UserDaoService;
+import com.learn.rest.websevices.restfulwebservices.users.UserNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,9 @@ public class UserJpaResource {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PostRepository postRepository;
 
     @Autowired
     private UserDaoService userDaoService;
@@ -43,6 +48,23 @@ public class UserJpaResource {
                 //appending or replacing id with user id
                 .path("/{id}").buildAndExpand(savedUser.getId()).toUri();
         return ResponseEntity.created(uri).build();
+    }
+
+    @GetMapping("/jpa/users/{id}/posts")
+    public List<Post> retrievePostForUser(@PathVariable int id){
+        Optional<User> user = userRepository.findById(id);
+        if(user.isPresent()) return user.get().getPosts();
+        else throw new UserNotFoundException("no user with id "+ id);
+    }
+
+    @PostMapping("/jpa/users/{id}/posts")
+    public User createPostForUser(@PathVariable int id,@Valid @RequestBody Post post){
+        Optional<User> user = userRepository.findById(id);
+        if(user.isPresent()){
+            user.get().getPosts().add(post);
+
+        }
+        return userRepository.findById(id).get();
     }
 
     @DeleteMapping("/jpa/users/{id}")

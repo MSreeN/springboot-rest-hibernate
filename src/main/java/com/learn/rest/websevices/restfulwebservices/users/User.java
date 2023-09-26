@@ -23,6 +23,14 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Post> posts;
 
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
     public  User(){}
 
     public User(int id, String name, LocalDate dob) {

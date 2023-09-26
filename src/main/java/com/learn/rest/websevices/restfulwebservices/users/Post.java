@@ -1,5 +1,6 @@
 package com.learn.rest.websevices.restfulwebservices.users;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -11,11 +12,20 @@ public class Post {
     @GeneratedValue
     private int id;
     private String description;
+    @JsonIgnore
     @ManyToOne
     private User user;
 
     public int getId() {
         return id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void setId(int id) {
